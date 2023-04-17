@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-[#1D1D1D] text-white overflow-x-clip;
+}
+
+::-webkit-scrollbar {
+  @apply rounded-b-full;
+  @apply w-1.5;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full;
+  @apply bg-white;
+}
