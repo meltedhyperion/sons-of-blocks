@@ -6,7 +6,7 @@ let db: Db;
 
 const initializeClient = async (): Promise<MongoClient> => {
   try {
-    return await MongoClient.connect(dbUri);
+    return await MongoClient.connect(dbUri, { useUnifiedTopology: true });
   } catch (e) {
     throw e;
   }
