@@ -1,11 +1,18 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 
 function Page() {
-  const { address } = useAccount();
+  const { isConnected } = useAccount();
+  const router = useRouter();
+
+  useEffect(() => {
+    if(isConnected) router.push("/me");
+  })
 
   return (
     <div>
-      {address}
+      <h1>Home</h1>
     </div>
   )
 }
