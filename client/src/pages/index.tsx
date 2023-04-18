@@ -7,12 +7,13 @@ function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if(isConnected) router.push("/me");
+    if(isConnected) router.push("/onboarding");
   })
 
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="flex flex-col gap-3 p-16">
+      <h1 className="text-7xl font-bold">Tagline</h1>
+      <h2 className="text-4xl font-semibold">Connect Your Wallet to Get Started</h2>
     </div>
   )
 }

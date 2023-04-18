@@ -6,6 +6,7 @@ import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogTitle, Dialog
 interface AadharProps {
 	name: string;
 	aadhaarNumber: string;
+	isVerified: boolean;
 	mutate: ({}) => void;
 }
 

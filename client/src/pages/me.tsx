@@ -35,13 +35,13 @@ function Me() {
 
   if (isLoading) return <Loader />
 
-  const { FirstName, MiddleName, LastName, AadhaarNumber, PANCardNo } = data.data;
+  const { FirstName, MiddleName, LastName, AadhaarNumber, PANCardNo, lastChanged = ["Aadhaar"] } = data.data;
 
   return (
     <ProtectedRoute>
       <div className="flex gap-5 items-center justify-center">
-        <Aadhaar name={`${FirstName} ${MiddleName} ${LastName}`} aadhaarNumber={AadhaarNumber} mutate={mutate} />
-        <PANCard name={`${FirstName} ${MiddleName} ${LastName}`} pan={PANCardNo} mutate={mutate} />
+        <Aadhaar name={`${FirstName} ${MiddleName} ${LastName}`} aadhaarNumber={AadhaarNumber} mutate={mutate} isVerified={"Aadhaar" in lastChanged} />
+        <PANCard name={`${FirstName} ${MiddleName} ${LastName}`} pan={PANCardNo} mutate={mutate} isVerified={"PANCard" in lastChanged} />
       </div>
     </ProtectedRoute>
   );

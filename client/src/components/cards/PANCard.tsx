@@ -6,6 +6,7 @@ import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogTitle, Dialog
 interface PANCardProps {
 	name: string;
 	pan: string;
+	isVerified: boolean;
 	mutate: ({}) => void;
 }
 
