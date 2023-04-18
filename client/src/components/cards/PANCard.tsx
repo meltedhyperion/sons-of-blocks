@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card"
-import { Button, Input, Label } from "@/components/ui";
+import { Badge, Button, Input, Label } from "@/components/ui";
 import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogTitle, DialogFooter } from "@/components/ui/Dialog";
+import { VerifiedIcon } from "lucide-react"
 
 interface PANCardProps {
 	name: string;
@@ -18,7 +19,7 @@ const initialData = {
 	PANCardNo: "",
 }
 
-const PANCard = ({ name, pan, mutate }: PANCardProps) => {
+const PANCard = ({ name, pan, isVerified, mutate }: PANCardProps) => {
 	const [userData, setUserData] = useState(initialData);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,8 +33,8 @@ const PANCard = ({ name, pan, mutate }: PANCardProps) => {
 
   return (
 		<Card className="w-80 h-52 bg-blue-300 text-black">
-						<CardHeader>
-				<CardTitle>PAN Card</CardTitle>
+			<CardHeader>
+				<CardTitle className="flex justify-between">PAN Card {isVerified && <Badge className="flex gap-2 bg-white">Verified<VerifiedIcon className="w-4 h-4"/></Badge>}</CardTitle>
 				<div className="py-3">
 					<div className="text-2xl font-bold">{pan}</div>
 					<div className="">{name}</div>

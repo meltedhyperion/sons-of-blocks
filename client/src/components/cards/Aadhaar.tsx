@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button, Input, Label } from "@/components/ui";
+import { Button, Input, Label, Badge } from "@/components/ui";
 import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogTitle, DialogFooter } from "@/components/ui/Dialog";
+import { VerifiedIcon } from "lucide-react";
 
 interface AadharProps {
 	name: string;
@@ -18,7 +19,8 @@ const initialData = {
 	AadhaarNumber: "",
 }
 
-const Aadhar = ({ name, aadhaarNumber, mutate }: AadharProps) => {
+const Aadhar = ({ name, aadhaarNumber, isVerified, mutate }: AadharProps) => {
+	console.log(isVerified);
 	const [userData, setUserData] = useState(initialData);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +35,7 @@ const Aadhar = ({ name, aadhaarNumber, mutate }: AadharProps) => {
   return (
 		<Card className="w-80 h-52 bg-green-200 text-black">
 			<CardHeader>
-				<CardTitle>Aadhaar Card</CardTitle>
+				<CardTitle className="flex justify-between">Aadhaar Card {isVerified && <Badge className="flex gap-2 bg-white">Verified<VerifiedIcon className="w-4 h-4"/></Badge>}</CardTitle>
 				<div className="py-3">
 					<div className="text-2xl font-bold">{aadhaarNumber}</div>
 					<div className="">{name}</div>

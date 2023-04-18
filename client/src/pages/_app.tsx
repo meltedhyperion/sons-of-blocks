@@ -23,6 +23,8 @@ function App({ Component, pageProps }: AppProps) {
       <RainbowKitProvider chains={chains}>
         <NextHead>
           <title>Sons of Blocks</title>
+          <meta name="description" content="Sons of Blocks" />
+          <link rel="icon" href="/sob.svg" type="image/svg+xml" />
         </NextHead>
         <QueryClientProvider client={queryClient!}>
           <Navbar />
