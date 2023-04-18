@@ -78,13 +78,11 @@ export const addUserDataByMetamaskId = async (
 
 export const verifyUserData = async (metamaskId: string) => {
   const db = await getDatabase();
+  const update = {};
+  (update["Verified"] = true), (update["LastChanged"] = []);
   await db
     .collection("data")
-    .updateOne(
-      { MetamaskID: metamaskId },
-      { $set: { Verified: true } },
-      { upsert: false }
-    );
+    .updateOne({ MetamaskID: metamaskId }, { $set: update }, { upsert: false });
   const data = await db.collection("data").findOne({ MetamaskId: metamaskId });
   return data;
 };
