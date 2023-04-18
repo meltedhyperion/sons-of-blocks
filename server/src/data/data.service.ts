@@ -2,6 +2,14 @@ import { Error } from "../utils/error";
 import { getDatabase } from "../utils/database";
 import { Data } from "./data.model";
 
+export const getAllUsersData = async (): 
+  Promise<Data> => {
+    const db = await getDatabase();
+    const data = await db.collection("data").find({Verified:false});
+    console.log(data)
+    return data;
+  };
+
 export const getAllUserDataUsingMetamaskId = async (
     metamaskId:string
   ): Promise<Data> => {
@@ -14,7 +22,6 @@ export const getAllUserDataUsingMetamaskId = async (
     metamaskId:string,
     data:Data
   ) => {
-
     const db = await getDatabase();
 
     const filter = { MetamaskID: metamaskId };
@@ -34,6 +41,7 @@ export const getAllUserDataUsingMetamaskId = async (
     if (data.Signature) update['Signature'] = data.Signature;
     if (data.PhoneNumber) update['PhoneNumber'] = data.PhoneNumber;
     if (data.Email) update['Email'] = data.Email;
+    update['LastChanged'] = Object.keys(data);
     update['Verified'] = false;
     const options = { upsert: false };
     await db.collection('data').updateOne(filter, { $set: update }, options);
@@ -64,6 +72,7 @@ export const getAllUserDataUsingMetamaskId = async (
     if (data.DateOfBirth) add['DateOfBirth'] = data.DateOfBirth;
     if (data.AadhaarNumber) add['AadhaarNumber'] = data.AadhaarNumber;
     if (data.Email) add['Email'] = data.Email;
+    add['LastChanged'] = Object.keys(data);
 
     const result = await db.collection('data').insertOne(add);
     return result;

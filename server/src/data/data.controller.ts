@@ -1,6 +1,6 @@
 import { Error } from "../utils/error";
 import { Request, Response } from "express";
-import { addUserDataByMetamaskId, getAllUserDataUsingMetamaskId, isMetamaskIdNew, updateUserDataByMetamaskId, verifyAccessToken, verifyUserData } from "./data.service";
+import { addUserDataByMetamaskId, getAllUserDataUsingMetamaskId, getAllUsersData, isMetamaskIdNew, updateUserDataByMetamaskId, verifyAccessToken, verifyUserData } from "./data.service";
 import { Data } from "./data.model";
 import { getAccessToken, getMetamaskToken } from "../utils/const";
 
@@ -23,6 +23,24 @@ export const getAllData = async(req: Request, res: Response) => {
     }
 }
 
+export const getAllUsers = async(req: Request, res: Response) => {
+    const accessToken : string = getAccessToken(req)
+    try {
+        if(!accessToken) {
+            const error: Error = {
+                errorKey: "MANDATORY_FIELDS_MISSING",
+                message: "Mandatory fields are missing.",
+            };
+            return res.status(400).json(error);
+        }
+        if (!(await verifyAccessToken(accessToken))) return res.status(403).json({'error': 'unauthorized request'})
+        const data = await getAllUsersData()
+        return res.status(200).json({data:data});
+    } catch (error) {
+        console.error(error);
+        return res.sendStatus(500);
+    }
+}
 
 export const updateData = async(req: Request, res: Response) => {
     const metamaskId : string = getMetamaskToken(req)

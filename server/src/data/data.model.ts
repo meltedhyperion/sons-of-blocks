@@ -15,6 +15,7 @@ export interface Data {
     PhoneNumber?: string,
     Email?: string,
     Signature?: string,
+    LastChanged?:string[],
     Verified?: boolean,
 
 
