@@ -15,7 +15,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   useEffect(() => {
     if (!isConnected) router.push("/");
     setIsLoading(false);
-  })
+  }, [])
 
   return (
     isLoading 
