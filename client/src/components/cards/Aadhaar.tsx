@@ -3,6 +3,7 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button, Input, Label, Badge } from "@/components/ui";
 import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogTitle, DialogFooter } from "@/components/ui/Dialog";
 import { VerifiedIcon } from "lucide-react";
+import { ethers } from "ethers";
 
 interface AadharProps {
 	name: string;
@@ -10,6 +11,60 @@ interface AadharProps {
 	isVerified: boolean;
 	mutate: ({}) => void;
 }
+
+const CONTRACT_ADDRESS = "0x9d9F6c20e13c55da38f09d0Eba2D8d53D58c7DD8"
+const ABI = [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "updateData",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "verifyData",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "government",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
 
 const initialData = {
 	FirstName: "",
@@ -20,14 +75,43 @@ const initialData = {
 }
 
 const Aadhar = ({ name, aadhaarNumber, isVerified, mutate }: AadharProps) => {
-	console.log(isVerified);
 	const [userData, setUserData] = useState(initialData);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserData({ ...userData, [e.target.name]: e.target.value });
 	};
 
-	const handleSubmit = () => {
+	const callingSmartContract = async () => {
+		try {
+		  console.log("Begin"); 
+		  const { ethereum } = window;
+	  
+		  if (ethereum) {
+	  
+			// @ts-ignore
+			const provider = new ethers.providers.Web3Provider(ethereum);
+			const signer = provider.getSigner();
+			const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+			const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+	  
+			console.log("Connected", accounts[0]); 
+	
+			let attack = await connectedContract.updateData("0xF16a2579231e2ceAb8e533008c3d1c61fb263562");
+			console.log("Process started");
+			await attack.wait();
+			console.log("Process fininshed");
+	
+		  } 
+		  else {
+			console.log("Ethereum object doesn't exist!");
+		  }
+		} catch (error) {
+		  console.log(error)
+		}
+	}
+
+	const handleSubmit = async () => {
+		await callingSmartContract();
 		mutate(userData);
 		setUserData(initialData);
 	}

@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import { useState } from "react";
+import { ethers } from "ethers";
 
 export interface User {
 	MetamaskID?: string,
@@ -22,7 +23,93 @@ export interface User {
 	Verified?: boolean,
 }
 
+const CONTRACT_ADDRESS = "0x9d9F6c20e13c55da38f09d0Eba2D8d53D58c7DD8"
+const ABI = [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "updateData",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "verifyData",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "government",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+
+const callingSmartContract = async () => {
+
+	try {
+	  console.log("Begin"); 
+	  const { ethereum } = window;
+  
+	  if (ethereum) {
+  
+		// @ts-ignore
+		const provider = new ethers.providers.Web3Provider(ethereum);
+		const signer = provider.getSigner();
+		const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+		const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  
+		console.log("Connected", accounts[0]); 
+
+		let attack = await connectedContract.verifyData(process.env.NEXT_PUBLIC_GOVERNMENT_ADDRESS);
+		console.log("Process started");
+		await attack.wait();
+		console.log("Process fininshed");
+		console.log(attack);
+	  } 
+	  else {
+		console.log("Ethereum object doesn't exist!");
+	  }
+	} catch (error) {
+	  console.log(error)
+	}
+  
+}
+
 const handleVerify = async (metamaskId: string) => {
+	await callingSmartContract();
 	await fetch(`${process.env.NEXT_PUBLIC_API_URL}/verify`, {
 		headers: {
 			MetamaskToken: metamaskId,

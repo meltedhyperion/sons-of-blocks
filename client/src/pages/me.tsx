@@ -3,6 +3,7 @@ import { Loader, ProtectedRoute } from "@/components/shared";
 import { useAccount } from "wagmi";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { Button } from "@/components/ui";
 
 function Me() {
   const { address } = useAccount();
@@ -40,6 +41,7 @@ function Me() {
         {AadhaarNumber && <Aadhaar name={`${FirstName} ${MiddleName} ${LastName}`} aadhaarNumber={AadhaarNumber} mutate={mutate} isVerified={!LastChanged.includes("Aadhaar")} />}
         {PANCardNo && <PANCard name={`${FirstName} ${MiddleName} ${LastName}`} pan={PANCardNo} mutate={mutate} isVerified={!LastChanged.includes("PANCard")} />}
       </div>
+      <Button>Add Drivers Licence</Button>
     </ProtectedRoute>
   );
 }
