@@ -1,2 +1,2 @@
-export { default as Aadhar } from "./Aadhar";
+export { default as Aadhaar } from "./Aadhaar";
 export { default as PANCard } from "./PANCard";

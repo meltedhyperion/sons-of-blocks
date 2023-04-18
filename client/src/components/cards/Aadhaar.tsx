@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Card, CardHeader, CardTitle } from "@/components/ui/Card"
+import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button, Input, Label } from "@/components/ui";
 import { Dialog, DialogTrigger, DialogHeader, DialogContent, DialogTitle, DialogFooter } from "@/components/ui/Dialog";
 
-interface PANCardProps {
+interface AadharProps {
 	name: string;
-	pan: string;
+	aadhaarNumber: string;
 	mutate: ({}) => void;
 }
 
@@ -14,10 +14,10 @@ const initialData = {
 	MiddleName: "",
 	LastName: "",
 	PhoneNumber: "",
-	PANCardNo: "",
+	AadhaarNumber: "",
 }
 
-const PANCard = ({ name, pan, mutate }: PANCardProps) => {
+const Aadhar = ({ name, aadhaarNumber, mutate }: AadharProps) => {
 	const [userData, setUserData] = useState(initialData);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,20 +30,20 @@ const PANCard = ({ name, pan, mutate }: PANCardProps) => {
 	}
 
   return (
-		<Card className="w-80 h-52 bg-blue-300 text-black">
-						<CardHeader>
-				<CardTitle>PAN Card</CardTitle>
+		<Card className="w-80 h-52 bg-green-200 text-black">
+			<CardHeader>
+				<CardTitle>Aadhaar Card</CardTitle>
 				<div className="py-3">
-					<div className="text-2xl font-bold">{pan}</div>
+					<div className="text-2xl font-bold">{aadhaarNumber}</div>
 					<div className="">{name}</div>
 				</div>
 				<Dialog>
 					<DialogTrigger asChild>
 						<Button className="w-fit self-end">Edit</Button>
 					</DialogTrigger>
-					<DialogContent className="sm:max-w-[425px] bg-blue-300 text-black">
+					<DialogContent className="sm:max-w-[425px] bg-green-200 text-black">
 						<DialogHeader>
-							<DialogTitle>Edit PAN</DialogTitle>
+							<DialogTitle>Edit Aadhar</DialogTitle>
 						</DialogHeader>
 						<div className="grid gap-4 py-4">
 							<div className="grid grid-cols-4 items-center gap-4">
@@ -72,9 +72,9 @@ const PANCard = ({ name, pan, mutate }: PANCardProps) => {
 							</div>
 							<div className="grid grid-cols-4 items-center gap-4">
 								<Label htmlFor="username" className="text-right">
-									PAN
+									Aadhaar Number
 								</Label>
-								<Input value={userData.PANCardNo} name="PANCardNo" onChange={handleInputChange} className="col-span-3" />
+								<Input value={userData.AadhaarNumber} name="AadhaarNumber" onChange={handleInputChange} className="col-span-3" />
 							</div>
 						</div>
 						<DialogFooter>
@@ -87,4 +87,4 @@ const PANCard = ({ name, pan, mutate }: PANCardProps) => {
 	)
 }
 
-export default PANCard;
+export default Aadhar;
