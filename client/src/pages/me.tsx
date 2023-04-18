@@ -3,7 +3,6 @@ import { Loader, ProtectedRoute } from "@/components/shared";
 import { useAccount } from "wagmi";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { Dialog } from "@/components/ui/Dialog";
 
 function Me() {
   const { address } = useAccount();
@@ -33,16 +32,13 @@ function Me() {
 
   if (isLoading) return <Loader />
 
-  const { FirstName, MiddleName, LastName, AadhaarNumber, PANCardNo, lastChanged } = data.data;
+  const { FirstName, MiddleName, LastName, AadhaarNumber, PANCardNo, LastChanged } = data.data;
 
   return (
     <ProtectedRoute>
       <div className="flex gap-5 items-center justify-center">
-        {AadhaarNumber && <Aadhaar name={`${FirstName} ${MiddleName} ${LastName}`} aadhaarNumber={AadhaarNumber} mutate={mutate} isVerified={!lastChanged.includes("Aadhaar")} />}
-        {PANCardNo && <PANCard name={`${FirstName} ${MiddleName} ${LastName}`} pan={PANCardNo} mutate={mutate} isVerified={!lastChanged.includes("PANCard")} />}
-        <Dialog>
-
-        </Dialog>
+        {AadhaarNumber && <Aadhaar name={`${FirstName} ${MiddleName} ${LastName}`} aadhaarNumber={AadhaarNumber} mutate={mutate} isVerified={!LastChanged.includes("Aadhaar")} />}
+        {PANCardNo && <PANCard name={`${FirstName} ${MiddleName} ${LastName}`} pan={PANCardNo} mutate={mutate} isVerified={!LastChanged.includes("PANCard")} />}
       </div>
     </ProtectedRoute>
   );
