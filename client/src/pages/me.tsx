@@ -33,7 +33,7 @@ function Me() {
 
   if (isLoading) return <Loader />
 
-  const { FirstName, MiddleName, LastName, AadhaarNumber, PANCardNo, LastChanged } = data.data;
+  const { FirstName, MiddleName = "", LastName, AadhaarNumber, PANCardNo, LastChanged = [] } = data.data;
 
   return (
     <ProtectedRoute>
